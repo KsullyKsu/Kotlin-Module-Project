@@ -1,5 +1,6 @@
 fun main() {
-    // ваш код начнется здесь
-    // вы не должны ограничиваться только классом Main и можете создавать свои классы по необходимости
-    println("Привет")
+    val userArchive = mutableListOf<UserArchives>()
+    while (true) { Archive(userArchive).onCreate() }
 }
+data class UserArchives(val archiveName: String, val notesList: MutableList<UserNotes>)
+data class UserNotes(val noteName: String, val noteText: String)
