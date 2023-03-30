@@ -1,20 +1,22 @@
 import kotlin.system.exitProcess
 
 class Archive(private val userArchive: MutableList<UserArchives>) :
-    Menu(NoteAdd.TitleTypes.ARCHIVES, null) {
+    Menu(TitleTypes.ARCHIVES, null) {
     private var currArchive = 0
     override fun goPrevious() {
         println("Пока..")
         exitProcess(1)
     }
+
     override fun createElement() {
         print("Введите наименование архива: ")
-        val newName = NoteAdd.waitUserResponse(NoteAdd.UserResponseType.TEXT, 0, 0)
+        val newName = UtilFun.waitUserResponse(UserResponseType.TEXT, 0, 0)
         userArchive.add(UserArchives(newName, mutableListOf()))
         println("Создан новый архив: $newName")
     }
+
     override fun showAllElements() {
-        NoteAdd.printAllArchivesHead()
+        UtilFun.printAllArchivesHead()
         if (userArchive.size > 0) {
             println("1. Выход")
             var cnt = 1
@@ -27,10 +29,15 @@ class Archive(private val userArchive: MutableList<UserArchives>) :
             onCreate()
         }
     }
+
     override fun selectElement() {
         var userSelected: Int
         while (true) {
-            userSelected = NoteAdd.waitUserResponse(NoteAdd.UserResponseType.SELECTED_MENU, 1, userArchive.size + 1).toInt()
+            userSelected = UtilFun.waitUserResponse(
+                UserResponseType.SELECTED_MENU,
+                1,
+                userArchive.size + 1
+            ).toInt()
             if (userSelected > userArchive.size + 1) println("Такого архива нет")
             else break
         }
@@ -40,6 +47,7 @@ class Archive(private val userArchive: MutableList<UserArchives>) :
             goNext()
         }
     }
+
     override fun goNext() {
         Notes(userArchive[currArchive].notesList, userArchive[currArchive].archiveName).onCreate()
     }
